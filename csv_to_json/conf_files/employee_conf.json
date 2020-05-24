@@ -1,0 +1,6 @@
+{
+	"input_file" : "C:\\Users\\Kishan\\Desktop\\python_projects\\csv_to_json\\input\\employee.csv",
+	"output_file" : "C:\\Users\\Kishan\\Desktop\\python_projects\\csv_to_json\\output\\employee.json",
+	"delimiter" : ",",
+	"log_file_path" : "C:\\Users\\Kishan\\Desktop\\python_projects\\csv_to_json\\logs"
+}

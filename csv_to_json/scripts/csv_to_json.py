@@ -1,3 +1,4 @@
+
 import argparse
 import json
 import logging
@@ -6,41 +7,6 @@ import pandas as pd
 import sys
 from datetime import datetime
 from json import JSONDecodeError
-
-log_frmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-logging.basicConfig(level=logging.DEBUG, format=log_frmt)
-
-parser = argparse.ArgumentParser(description='CSV to JSON Converter')
-
-parser.add_argument('-t', '--type', help='Configuration type JSON/ARGS', required=True)
-parser.add_argument('-c', '--confFilePath', help='JSON Configuration File path', default=None)
-parser.add_argument('-i', '--inputFilePath', help='Input CSV File Path', default=None)
-parser.add_argument('-o', '--outputFilePath', help='Output path to store JSON File', default=None)
-parser.add_argument('-d', '--delimiter', help='CSV File delimiter', default=",")
-parser.add_argument('-l', '--logFilePath', help='Log File Path', default=None)
-parser.add_argument('-n', '--columnNames', help='List of Column Names - For files without header', default=None)
-
-args = parser.parse_args()
-conf_type = args.type
-conf_file_path = args.confFilePath
-input_csv_file_path = args.inputFilePath
-ouput_json_file_path = args.outputFilePath
-delimiter = args.delimiter
-log_file_path = args.logFilePath
-column_names = args.columnNames
-
-logging.info("CONFIGURATION TYPE: {}".format(conf_type))
-if conf_file_path != None:
-    logging.info("CONF FILE PATH: '{}'".format(conf_file_path))
-if input_csv_file_path != None:
-    logging.info("INPUT CSV FILE PATH: '{}'".format(input_csv_file_path))
-if ouput_json_file_path != None:
-    logging.info("OUTPUT JSON FILE PATH: '{}'".format(ouput_json_file_path))
-logging.info("DELIMITER: {}".format(delimiter))
-if log_file_path != None:
-    logging.info("LOG FILE PATH: '{}'".format(log_file_path))
-if column_names != None:
-    logging.info("LIST OF COLUMN NAMES: {}".format(column_names))
 
 
 def read_config_file(file_path):
@@ -58,41 +24,6 @@ def read_config_file(file_path):
         logging.error("EXITING")
         sys.exit(1)
     return config
-
-
-if (conf_type.lower() == "json" and conf_file_path != None):
-    config = read_config_file(conf_file_path)
-    config_keys = config.keys()
-    delimiter = ","
-    column_names = None
-    if "input_file" in config_keys:
-        input_csv_file_path = config["input_file"]
-    else:
-        logging.error("input_file paramater not definied in the config JSON file")
-        logging.error("EXITING")
-        sys.exit()
-    if "output_file" in config_keys:
-        ouput_json_file_path = config["output_file"]
-    else:
-        logging.error("output_file paramater not definied in the config JSON file")
-        logging.error("EXITING")
-        sys.exit()
-    if "delimiter" in config_keys:
-        delimiter = config["delimiter"]
-    if "column_names" in config_keys:
-        column_names = config["column_names"]
-    if "log_file_path" in config_keys:
-        log_file_path = config["log_file_path"]
-elif (conf_type.lower() == "json" and conf_file_path == None):
-    logging.error("--confFilePath is required arguments when type argument value is JSON")
-    logging.error("EXITING")
-    sys.exit(1)
-else:
-    if (input_csv_file_path == None or ouput_json_file_path == None):
-        logging.error(
-            "--inputFilePath and --outputFilePath are required arguments when type argument value is not JSON")
-        logging.error("EXITING")
-        sys.exit(1)
 
 
 class csv_to_json:
@@ -121,18 +52,71 @@ class csv_to_json:
 
     def convert(self):
         if (self.column_names == None):
-            df = pd.read_csv(self.input_file_path, delimiter=self.delimiter)
+            df = pd.read_csv(self.input_file_path, delimiter=self.delimiter, engine="python")
         else:
-            df = pd.read_csv(self.input_file_path, delimiter=self.delimiter, names=self.column_names)
+            df = pd.read_csv(self.input_file_path, delimiter=self.delimiter, names=self.column_names, engine="python")
         df = df.rename(columns=self.transform_column_names(df))
         df.to_json(orient="records", path_or_buf=self.output_file_path)
 
 
-def main(log_file_path=None):
+def main():
+    parser = argparse.ArgumentParser(description='CSV to JSON Converter')
+
+    parser.add_argument('-t', '--type', help='Configuration type JSON/ARGS', required=True)
+    parser.add_argument('-c', '--confFilePath', help='JSON Configuration File path', default=None)
+    parser.add_argument('-i', '--inputFilePath', help='Input CSV File Path', default=None)
+    parser.add_argument('-o', '--outputFilePath', help='Output path to store JSON File', default=None)
+    parser.add_argument('-d', '--delimiter', help='CSV File delimiter', default=",", type=str)
+    parser.add_argument('-l', '--logFilePath', help='Log File Path', default=None)
+    parser.add_argument('-n', '--columnNames', help='List of Column Names - For files without header', default=None)
+
+    args = parser.parse_args()
+    conf_type = args.type
+    conf_file_path = args.confFilePath
+    input_csv_file_path = args.inputFilePath
+    ouput_json_file_path = args.outputFilePath
+    delimiter = args.delimiter
+    log_file_path = args.logFilePath
+    column_names = args.columnNames
+
+    if (conf_type.lower() == "json" and conf_file_path != None):
+        config = read_config_file(conf_file_path)
+        config_keys = config.keys()
+        delimiter = ","
+        column_names = None
+        if "input_file" in config_keys:
+            input_csv_file_path = config["input_file"]
+        else:
+            logging.error("input_file paramater not definied in the config JSON file")
+            logging.error("EXITING")
+            sys.exit()
+        if "output_file" in config_keys:
+            ouput_json_file_path = config["output_file"]
+        else:
+            logging.error("output_file paramater not definied in the config JSON file")
+            logging.error("EXITING")
+            sys.exit()
+        if "delimiter" in config_keys:
+            delimiter = config["delimiter"]
+        if "column_names" in config_keys:
+            column_names = config["column_names"]
+        if "log_file_path" in config_keys:
+            log_file_path = config["log_file_path"]
+    elif (conf_type.lower() == "json" and conf_file_path == None):
+        logging.error("--confFilePath is required arguments when type argument value is JSON")
+        logging.error("EXITING")
+        sys.exit(1)
+    else:
+        if (input_csv_file_path == None or ouput_json_file_path == None):
+            logging.error(
+                "--inputFilePath and --outputFilePath are required arguments when type argument value is not JSON")
+            logging.error("EXITING")
+            sys.exit(1)
+    
     # Create a custom logger
     logger = logging.getLogger(__name__)
     current_timestamp = datetime.now().strftime("%Y-%m-%d_%H_%M_%S")
-    log_file_name = 'csv_to_json_' + str(current_timestamp) + '.log'
+    log_file_name = 'csv_to_json_' + str(current_timestamp) + '.logs'
     if log_file_path != None:
         log_file_name = os.path.join(log_file_path, log_file_name)
     f_handler = logging.FileHandler(log_file_name)
@@ -140,9 +124,25 @@ def main(log_file_path=None):
     f_handler.setFormatter(f_format)
     f_handler.setLevel(logging.DEBUG)
     logger.addHandler(f_handler)
+    
+    logger.info("CONFIGURATION TYPE: {}".format(conf_type))
+    if conf_file_path != None:
+        logger.info("CONF FILE PATH: '{}'".format(conf_file_path))
+    if input_csv_file_path != None:
+        logger.info("INPUT CSV FILE PATH: '{}'".format(input_csv_file_path))
+    if ouput_json_file_path != None:
+        logger.info("OUTPUT JSON FILE PATH: '{}'".format(ouput_json_file_path))
+    logger.info("DELIMITER: {}".format(delimiter))
+    if log_file_path != None:
+        logger.info("LOG FILE PATH: '{}'".format(log_file_path))
+    if column_names != None:
+        logger.info("LIST OF COLUMN NAMES: {}".format(column_names))
 
     logger.info("PROCESS STARTED")
-    converter = csv_to_json(input_csv_file_path, ouput_json_file_path)
+    if column_names != None:
+        converter = csv_to_json(input_csv_file_path, ouput_json_file_path, delimiter=delimiter, column_names=column_names)
+    else:
+        converter = csv_to_json(input_csv_file_path, ouput_json_file_path, delimiter=delimiter)
 
     if (converter.is_file()):
         logger.info("INPUT FILE PATH IS FILE '{}'".format(converter.input_file_path))
@@ -165,7 +165,6 @@ def main(log_file_path=None):
 
 
 if __name__ == "__main__":
-    if log_file_path != None:
-        main(log_file_path)
-    else:
-        main()
+    log_frmt = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    logging.basicConfig(level=logging.DEBUG, format=log_frmt)
+    main()

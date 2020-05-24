@@ -1,0 +1,12 @@
+2020-05-24 18:22:29,402 - __main__ - INFO - CONFIGURATION TYPE: json
+2020-05-24 18:22:29,402 - __main__ - INFO - CONF FILE PATH: 'conf_files/employee_conf.json'
+2020-05-24 18:22:29,402 - __main__ - INFO - INPUT CSV FILE PATH: 'C:\Users\Kishan\Desktop\python_projects\csv_to_json\input\employee.csv'
+2020-05-24 18:22:29,402 - __main__ - INFO - OUTPUT JSON FILE PATH: 'C:\Users\Kishan\Desktop\python_projects\csv_to_json\output\employee.json'
+2020-05-24 18:22:29,402 - __main__ - INFO - DELIMITER: ,
+2020-05-24 18:22:29,402 - __main__ - INFO - LOG FILE PATH: 'C:\Users\Kishan\Desktop\python_projects\csv_to_json\logs'
+2020-05-24 18:22:29,403 - __main__ - INFO - PROCESS STARTED
+2020-05-24 18:22:29,406 - __main__ - INFO - INPUT FILE PATH IS FILE 'C:\Users\Kishan\Desktop\python_projects\csv_to_json\input\employee.csv'
+2020-05-24 18:22:29,406 - __main__ - INFO - INPUT FILE EXISTS 'C:\Users\Kishan\Desktop\python_projects\csv_to_json\input\employee.csv'
+2020-05-24 18:22:29,406 - __main__ - INFO - CONVERTING CSV TO JSON
+2020-05-24 18:22:29,414 - __main__ - INFO - FILE CONVERTED SUCCESSFULLY
+2020-05-24 18:22:29,422 - __main__ - INFO - CHECK OUTPUT LOCATION: 'C:\Users\Kishan\Desktop\python_projects\csv_to_json\output\employee.json'

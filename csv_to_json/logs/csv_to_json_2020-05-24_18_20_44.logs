@@ -1,0 +1,12 @@
+2020-05-24 18:20:44,251 - __main__ - INFO - CONFIGURATION TYPE: ARGS
+2020-05-24 18:20:44,251 - __main__ - INFO - INPUT CSV FILE PATH: 'input/student.csv'
+2020-05-24 18:20:44,251 - __main__ - INFO - OUTPUT JSON FILE PATH: 'output/student.json'
+2020-05-24 18:20:44,251 - __main__ - INFO - DELIMITER: ~
+2020-05-24 18:20:44,251 - __main__ - INFO - LOG FILE PATH: 'logs/'
+2020-05-24 18:20:44,251 - __main__ - INFO - LIST OF COLUMN NAMES: name,age,class
+2020-05-24 18:20:44,251 - __main__ - INFO - PROCESS STARTED
+2020-05-24 18:20:44,252 - __main__ - INFO - INPUT FILE PATH IS FILE 'input/student.csv'
+2020-05-24 18:20:44,253 - __main__ - INFO - INPUT FILE EXISTS 'input/student.csv'
+2020-05-24 18:20:44,253 - __main__ - INFO - CONVERTING CSV TO JSON
+2020-05-24 18:20:44,271 - __main__ - INFO - FILE CONVERTED SUCCESSFULLY
+2020-05-24 18:20:44,271 - __main__ - INFO - CHECK OUTPUT LOCATION: 'output/student.json'
