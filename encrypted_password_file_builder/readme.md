@@ -8,6 +8,8 @@ $ python scripts/encrypted_password_file_builder.py --help
 ```
 
 ```text
+usage: encrypted_password_file_builder.py [-h] [-l FILELOCATION]
+
 Encrypted Password File Builder
 
 optional arguments:
