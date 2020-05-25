@@ -31,7 +31,7 @@ $ python scripts/encrypted_password_file_builder.py -l ../password_files
 
 ##### Decrypt password file to use in python scripts
 
-To decrypt the key.bin and password.bin file. A custom module `password_decryptor.py` have been defined in the script folder. Using the `decrypt_password` method defined in the password_decryptor.py module, key.bin and password.bin file will be decrypted to get the password as shown below. Once decrypted the password can be used where ever it is required.
+To decrypt the key.bin and password.bin file. A custom module `password_decryptor.py` have been defined in the script folder. Using the `decrypt_password` method defined in the `password_decryptor.py` module, key.bin and password.bin file will be decrypted to get the password as shown below. Once decrypted the password can be used wherever it is required.
 ```python
 import sys
 
