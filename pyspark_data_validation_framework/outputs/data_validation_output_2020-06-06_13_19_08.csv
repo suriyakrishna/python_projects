@@ -1,0 +1,26 @@
+SOURCE DATA
+Name~Department~Manager~Salary
+Arsene Wenger~Bar~Friar Tuck~50
+Dimi Berbatov~Foo~Little John~50
+Friar Tuck~Foo~Robin Hood~100
+Little John~Foo~Robin Hood~100
+Robin Hood~Bar~None~200
+Sam Allardyce~Bar~None~250
+
+DESTINATION DATA
+Name~Department~Manager~Salary
+Arsene Wenger~Bar~Friar Tuck~50
+Dimi Berbatov~Foo~Little John~50
+Friar Tuck~Foo~Robin Hood~100
+Little John~Foo~Robin Hood~100
+Robin Hood~None~None~200
+Sam Allardyce~None~None~250
+
+RESULT
+Name~Department~Manager~Salary
+True~True~True~True
+True~True~True~True
+True~True~True~True
+True~True~True~True
+True~False~True~True
+True~False~True~True
